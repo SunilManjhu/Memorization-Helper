@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memorization Helper</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Memorization Helper</h1>
+    <p>Enter your text below and click "Hide Words". Adjust the slider to change the percentage of words hidden. Click on hidden words to reveal them.</p>
+    
+    <textarea id="userInput" rows="5" placeholder="Type your text here..."></textarea>
+    
+    <div class="controls">
+      <label for="hidePercentage">Percentage of Words to Hide:</label>
+      <input type="range" id="hidePercentage" min="10" max="100" step="10" value="30" oninput="updatePercentageLabel(this.value)">
+      <span id="percentageLabel">30%</span>
+    </div>
+    
+    <button id="hideWordsButton">Hide Words</button>
+    <button id="resetButton">Reset</button>
+    
+    <div id="output" class="output"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: none;
+}
+
+button {
+  padding: 10px 15px;
+  margin: 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.controls {
+  margin-bottom: 10px;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin-top: 5px;
+}
+
+output {
+  font-weight: bold;
+}
+
+.output {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+pre {
+  white-space: pre-wrap; /* Preserve line breaks and spaces */
+  font-family: inherit;
+}
+
+.hidden-word {
+  color: #555; /* Obfuscated text color */
+  background-color: transparent;
+  border-bottom: 1px dotted #777; /* Visual indicator for hidden words */
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.hidden-word:hover {
+  background-color: #ccc; /* Highlight on hover */
+}
+
+.hidden-word.revealed {
+  color: #333; /* Original text color */
+  background: none;
+  border-bottom: none;
+}
