@@ -15,41 +15,50 @@ function hideWords() {
 
   const hidePercentage = document.getElementById("hidePercentage").value / 100;
 
-  // Split input text into words while keeping original formatting
-  const words = inputText.split(/(\s+)/); // Split by spaces, keeping them
+  // Split input text into words and spaces while keeping original formatting
+  const words = inputText.split(/(\s+|\W+|\b)/); // Split by spaces or non-word characters, keeping them
 
-  // Filter to count only "real words" for hiding (non-punctuation words)
+  // Filter to count only "real words" (alphanumeric characters only)
   const validWordsIndexes = [];
-  words.forEach((word, index) => {
-    if (/\w/.test(word)) {
-      // Only include words that contain alphanumeric characters
-      validWordsIndexes.push(index);
+  const outputText = words.map((word, index) => {
+    // Check if the word is valid: only letters and numbers (no punctuation or spaces)
+    if (/^[A-Za-z0-9]+$/.test(word)) {
+      validWordsIndexes.push(index); // Store the index of valid words
+      return word; // Keep the valid word unchanged
+    } else {
+      return word; // Don't change spaces or punctuation
     }
   });
 
   const totalValidWords = validWordsIndexes.length;
-  const numToHide = Math.ceil(totalValidWords * hidePercentage);
 
-  // Randomly select indexes to hide
+  // If hidePercentage is 100%, hide all words
+  const numToHide = hidePercentage === 1 ? totalValidWords : Math.ceil(totalValidWords * hidePercentage);
+
+  // Randomly select indexes to hide if it's not 100%
   const hiddenIndexes = new Set();
-  let attempts = 0;
-
-  while (hiddenIndexes.size < numToHide && attempts < totalValidWords * 2) {
-    const randomIndex = Math.floor(Math.random() * totalValidWords);
-    const actualIndex = validWordsIndexes[randomIndex]; // Map back to actual indexes in the array
-    if (!hiddenIndexes.has(actualIndex)) {
-      hiddenIndexes.add(actualIndex);
+  if (hidePercentage !== 1) {
+    let attempts = 0;
+    while (hiddenIndexes.size < numToHide && attempts < totalValidWords * 2) {
+      const randomIndex = Math.floor(Math.random() * totalValidWords);
+      const actualIndex = validWordsIndexes[randomIndex]; // Map back to actual indexes in the array
+      if (!hiddenIndexes.has(actualIndex)) {
+        hiddenIndexes.add(actualIndex);
+      }
+      attempts++;
     }
-    attempts++;
+  } else {
+    // If 100%, hide all valid words
+    validWordsIndexes.forEach(index => hiddenIndexes.add(index));
   }
 
   // Generate output with hidden words
   const processedWords = words.map((word, index) => {
-    if (hiddenIndexes.has(index)) {
+    if (hiddenIndexes.has(index) && /^[A-Za-z0-9]+$/.test(word)) {
       const placeholder = "_".repeat(word.length); // Replace word with underscores
       return `<span class="hidden-word" aria-label="Hidden word. Click to reveal." data-word="${word}" onclick="revealWord(this)">${placeholder}</span>`;
     }
-    return word;
+    return word; // Return the word (space or valid word unchanged)
   });
 
   // Display processed text inside a <pre> to preserve formatting
